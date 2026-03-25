@@ -53,7 +53,7 @@ const getPublicacion = async (req, res) => {
     const [comentarios] = await db.query(
       `SELECT com.*, u.nombres, u.apellidos, u.registro_academico
        FROM comentario com
-       JOIN usuarios u ON com.id_usuario = u.id_usuario
+       JOIN usuarios u ON com.id_usuario_com = u.id_usuario
        WHERE com.id_publicacion = ?
        ORDER BY com.fecha ASC`,
       [id]

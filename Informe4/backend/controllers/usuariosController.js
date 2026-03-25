@@ -39,16 +39,16 @@ const updateUsuario = async (req, res) => {
   }
 };
  
-// GET /api/usuarios/:id_usuario/cursos-aprobados
+// GET /api/usuarios/:id_usuario_curapro/cursos-aprobados
 const getCursosAprobados = async (req, res) => {
-  const { id_usuario } = req.params;
+  const { id_usuario_curapro } = req.params;
   try {
     const [rows] = await db.query(
       `SELECT ca.id_registro, c.nombre_curso, c.creditos, c.area, ca.fecha_aprobacion
        FROM curso_aprobado ca
-       JOIN curso c ON ca.id_curso = c.id_curso
-       WHERE ca.id_usuario = ?`,
-      [id_usuario]
+       JOIN curso c ON ca.id_curso_curapro = c.id_curso
+       WHERE ca.id_usuario_curapro = ?`,
+      [id_usuario_curapro]
     );
     const totalCreditos = rows.reduce((sum, r) => sum + r.creditos, 0);
     res.json({ cursos: rows, total_creditos: totalCreditos });
@@ -57,16 +57,16 @@ const getCursosAprobados = async (req, res) => {
   }
 };
  
-// POST /api/usuarios/:id_usuario/cursos-aprobados
+// POST /api/usuarios/:id_usuario_curapro/cursos-aprobados
 const addCursoAprobado = async (req, res) => {
-  const { id_usuario } = req.params;
-  const { id_curso, fecha_aprobacion } = req.body;
-  if (!id_curso || !fecha_aprobacion)
+  const { id_usuario_curapro } = req.params;
+  const { id_curso_curapro, fecha_aprobacion } = req.body;
+  if (!id_curso_curapro || !fecha_aprobacion)
     return res.status(400).json({ message: 'id_curso y fecha_aprobacion son requeridos' });
   try {
     await db.query(
-      'INSERT INTO curso_aprobado (id_usuario, id_curso, fecha_aprobacion) VALUES (?, ?, ?)',
-      [id_usuario, id_curso, fecha_aprobacion]
+      'INSERT INTO curso_aprobado (id_usuario_curapro, id_curso_curapro, fecha_aprobacion) VALUES (?, ?, ?)',
+      [id_usuario_curapro, id_curso_curapro, fecha_aprobacion]
     );
     res.status(201).json({ message: 'Curso aprobado registrado correctamente' });
   } catch (err) {
@@ -74,7 +74,7 @@ const addCursoAprobado = async (req, res) => {
   }
 };
  
-// DELETE /api/usuarios/:id_usuario/cursos-aprobados/:id_registro
+// DELETE /api/usuarios/:id_usuario_curapro/cursos-aprobados/:id_registro
 const deleteCursoAprobado = async (req, res) => {
   const { id_registro } = req.params;
   try {
