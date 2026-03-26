@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import CrearPublicacion from './pages/CrearPublicacion';
 import Publicacion from './pages/Publicacion';
 import Perfil from './pages/Perfil';
+import ResetPassword from './pages/ResetPassword';
  
 const PrivateRoute = ({ children }) => {
   const usuario = localStorage.getItem('usuario');
@@ -22,6 +23,7 @@ function App() {
         <Route path="/crear-publicacion" element={<PrivateRoute><CrearPublicacion /></PrivateRoute>} />
         <Route path="/publicacion/:id" element={<PrivateRoute><Publicacion /></PrivateRoute>} />
         <Route path="/perfil/:registro_academico" element={<PrivateRoute><Perfil /></PrivateRoute>} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </BrowserRouter>
   );
